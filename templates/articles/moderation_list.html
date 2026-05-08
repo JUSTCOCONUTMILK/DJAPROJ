@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Модерация{% endblock %}
+{% block content %}
+<h1>Статьи на модерации</h1>
+{% for article in articles %}
+<div class="card">
+    <h3>{{ article.title }}</h3>
+    <p>{{ article.author.username }} | {{ article.category.name }} | {{ article.created_at }}</p>
+    <a href="{% url 'articles:article_detail' article.id %}">Открыть</a>
+    <form method="post" action="{% url 'articles:moderation_approve' article.id %}">
+        {% csrf_token %}
+        <button type="submit">Опубликовать</button>
+    </form>
+</div>
+{% empty %}<p>Пусто.</p>{% endfor %}
+{% endblock %}

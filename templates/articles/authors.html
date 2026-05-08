@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Авторы{% endblock %}
+{% block content %}
+<h1>Авторы</h1>
+<div class="card coconut-menu">
+    <img src="/static/coconut.png" alt="coconutmilk" class="coconut-avatar">
+    <strong>coconutmilk</strong>
+</div>
+
+{% if user.is_authenticated and user.is_staff or user.is_superuser %}
+<div class="card" style="background-color: #f0f8ff; border-left: 4px solid #007bff;">
+    <p><strong>🔧 Управление пользователями:</strong> <a href="{% url 'users:admin_panel' %}" style="color: #007bff;">Перейти в админ панель</a></p>
+</div>
+{% endif %}
+
+{% for author in authors %}
+<div class="card">
+    <p><strong>{{ author.username }}</strong> | роль: {{ author.role_label }} | статей: {{ author.published_count }}</p>
+    <p style="font-size: 0.9em; color: #666;">
+        {% if author.is_banned %}
+            <span style="color: red;">🔒 Заблокирован</span>
+        {% else %}
+            <span style="color: green;">✅ Активен</span>
+        {% endif %}
+    </p>
+</div>
+{% empty %}<p>Пользователей нет.</p>{% endfor %}
+{% endblock %}

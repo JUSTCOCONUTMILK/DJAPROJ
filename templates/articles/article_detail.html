@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{{ article.title }}{% endblock %}
+{% block content %}
+<article>
+    <h1>{{ article.title }}</h1>
+    <p>Автор: {{ article.author.username }} | {{ article.created_at }} | {{ article.category.name }}</p>
+    <p>Рейтинг: {{ article.rating }}</p>
+    {% if article.image %}<img src="{{ article.image.url }}" alt="{{ article.title }}" class="article-image">{% endif %}
+    <p>{{ article.content|linebreaks }}</p>
+    {% if user.is_authenticated %}
+        <form method="post" action="{% url 'articles:rate_article' article.id %}">{% csrf_token %}
+            <input type="number" name="score" min="1" max="5" value="{{ user_rating.score|default:5 }}">
+            <button type="submit">Оценить</button>
+        </form>
+        <form method="post" action="{% url 'articles:toggle_bookmark' article.id %}">{% csrf_token %}<button type="submit">Избранное</button></form>
+        {% if user.is_superuser or user.is_staff or user == article.author %}
+            <a href="{% url 'articles:article_edit' article.id %}">Редактировать</a>
+            <a href="{% url 'articles:article_delete' article.id %}">Удалить</a>
+        {% endif %}
+    {% endif %}
+</article>
+{% endblock %}

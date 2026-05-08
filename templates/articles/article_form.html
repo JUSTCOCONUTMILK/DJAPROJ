@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<div class="coconut-menu">
+    <img src="/static/coconut.png" alt="coconutmilk" class="coconut-avatar">
+    <strong>{{ title }}</strong>
+</div>
+
+<div class="card">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="{{ form.title.id_for_label }}" class="form-label">Заголовок статьи</label>
+            {{ form.title }}
+            {% if form.title.errors %}
+                <div class="error-message">{{ form.title.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.category.id_for_label }}" class="form-label">Категория</label>
+            {{ form.category }}
+            {% if form.category.errors %}
+                <div class="error-message">{{ form.category.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.image.id_for_label }}" class="form-label">Изображение (необязательно)</label>
+            {{ form.image }}
+            {% if form.image.errors %}
+                <div class="error-message">{{ form.image.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.content.id_for_label }}" class="form-label">Содержание статьи</label>
+            {{ form.content }}
+            {% if form.content.errors %}
+                <div class="error-message">{{ form.content.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group checkbox-group">
+            {{ form.submit_for_moderation }}
+            <label for="{{ form.submit_for_moderation.id_for_label }}" class="checkbox-label">
+                {{ form.submit_for_moderation.label }}
+            </label>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                {% if "Создать" in title %}Создать статью{% else %}Сохранить изменения{% endif %}
+            </button>
+            <a href="{% url 'articles:article_list' %}" class="btn btn-secondary">Отмена</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
