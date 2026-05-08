@@ -8,3 +8,6 @@ python manage.py migrate
 python manage.py init_admin
 python manage.py runserver
 ```
+супер админ
+log:  admin
+pas:  admin123
