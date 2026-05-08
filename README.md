@@ -89,6 +89,19 @@ python manage.py init_categories
 python manage.py flush
 ```
 
-## 📝 Лицензия
+## � Инструкции по запуску (копировать и вставить)
+
+```bash
+git clone https://github.com/JUSTCOCONUTMILK/DJAPROJ.git
+cd DJAPROJ
+python -m venv .venv
+.\.venv\Scripts\activate
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py init_admin
+python manage.py runserver
+```
+
+## �📝 Лицензия
 
 MIT License - свободное использование и модификация.
